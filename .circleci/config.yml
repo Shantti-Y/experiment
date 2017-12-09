@@ -11,8 +11,8 @@ jobs:
           RAILS_ENV: test
       - image: circleci/postgres:10.1-alpine
         environment:
-          - POSTGRES_USER=root
-          - POSTGRES_DB=experiment_test
+          POSTGRES_USER: root
+          POSTGRES_DB: experiment_test
     steps:
       - checkout
 
@@ -37,7 +37,10 @@ jobs:
           command: |
             bundle exec bin/rails db:create
             bundle exec rails db:migrate
-            
+          environment:
+            POSTGRES_USER: root
+            DATABASE_URL: "postgres://ubuntu@localhost:5432/experiment_test"
+
       # Run rspec in parallel
       - type: shell
         command: |
