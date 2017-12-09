@@ -16,6 +16,12 @@
     <%= form.text_field :name, id: :user_name %>
   </div>
 
+  <div class="field">
+     <%= image_tag @user.image.url if @user.image.present? %>
+     <%= form.file_field :image %>
+     <%= form.hidden_field :image_cache %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

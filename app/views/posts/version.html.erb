@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.reify.title %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <table>
+     <thead>
+      <tr>
+        <th>User</th>
+        <th>Title</th>
+      </tr>
+     </thead>
+     <tbody>
+        <% @post.reify.comments.each do |comment| %>
+        <tr>
+           <td><%= comment.user.name %></td>
+           <td><%= comment.text %></td>
+        </tr>
+        <% end %>
+     </tbody>
+  </table>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @post.reify.user.name %>
+</p>
+
+<p>
+  <strong>Commit:</strong>
+  <%= @post.event %>
+</p>
+
+<p>
+  <strong>Updated:</strong>
+  <%= @post.created_at %>
+</p>
+
+<%= link_to 'Back', post_path(@post.item_id) %>
