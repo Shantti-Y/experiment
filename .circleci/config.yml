@@ -9,6 +9,10 @@ jobs:
         PGHOST: 127.0.0.1
         PGUSER: circleci-demo-ruby
         RAILS_ENV: test
+      - image: circleci/postgres:9.5-alpine
+        POSTGRES_USER: circleci-demo-ruby
+        POSTGRES_DB: experiment_test
+        POSTGRES_PASSWORD: ""
     steps:
       - checkout
 
