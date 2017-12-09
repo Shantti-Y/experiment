@@ -9,6 +9,9 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: circleci-demo-ruby
           RAILS_ENV: test
+      - image: circleci/postgres:9.4.12-alpine
+          - POSTGRES_USER=ubuntu
+          - POSTGRES_DB=experiment_test
     steps:
       - checkout
 
@@ -18,11 +21,26 @@ jobs:
         key: rails-demo-bundle-{{ checksum "Gemfile.lock" }}
 
       - run:
-        name: Bundle Install
-        command: bundle install --path vendor/bundle
+          name: Bundle Install
+          command: bundle install --path vendor/bundle
 
       # Store bundle cache
       - type: cache-restore
         name: Store bundle cache
         key: rails-demo-bundle-{{ checksum 'Gemfile.lock' }}
         paths: vendor/bundle
+
+      # Database setup
+      - run:
+          name: Database setup
+          command: |
+            bundle exec bin/rails db:create
+            bundle exec rails db:migrate
+
+      # Run rspec in parallel
+      - type: shell
+          command: |
+            bundle exec rspec --profile 10 \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
