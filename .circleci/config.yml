@@ -26,18 +26,3 @@ jobs:
         name: Store bundle cache
         key: rails-demo-bundle-{{ checksum 'Gemfile.lock' }}
         paths: vendor/bundle
-
-      - run:
-        name: Wait for DB
-        command: dockerize -wait tcp://localhost:5432 -timeout 1m
-
-      - run:
-        name: Database setup
-        command: RAILS_ENV=test bin/rails db:migrate
-
-      # Run rspec in parallel
-      - type: shell
-        command: |
-          bundle exec rspec --profile 10 \
-                            --format progress \
-                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
