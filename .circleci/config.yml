@@ -28,7 +28,7 @@ jobs:
       # Store bundle cache
       - type: cache-restore
         name: Store bundle cache
-        key: rails-demo-bundle-{{ checksum 'Gemfile.lock' }}
+        key: rails-demo-bundle-{{ checksum "Gemfile.lock" }}
         paths: vendor/bundle
 
       # Database setup
@@ -36,7 +36,7 @@ jobs:
           name: Database setup
           command: |
             bundle exec bin/rails db:create
-            bundle exec rails db:migrate
+            bundle exec rails db:schema:load
 
       # Run rspec in parallel
       - type: shell
