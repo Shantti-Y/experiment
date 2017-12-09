@@ -9,7 +9,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: circleci-demo-ruby
           RAILS_ENV: test
-      - image: circleci/postgres:9.4.12-alpine
+      - image: circleci/postgres:10.1-alpine
           - POSTGRES_USER=ubuntu
           - POSTGRES_DB=experiment_test
     steps:
