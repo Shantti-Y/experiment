@@ -37,6 +37,8 @@ jobs:
           command: |
             bundle exec bin/rails db:create
             bundle exec rails db:migrate
+          environment:
+            DATABASE_URL: "postgres://ubuntu@localhost:5432/experiment_test"
 
       # Run rspec in parallel
       - type: shell
