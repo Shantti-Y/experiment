@@ -10,6 +10,7 @@ jobs:
           PGUSER: circleci-demo-ruby
           RAILS_ENV: test
       - image: circleci/postgres:10.1-alpine
+        environment:
           POSTGRES_USER: ubuntu
           POSTGRES_DB: experiment_test
     steps:
